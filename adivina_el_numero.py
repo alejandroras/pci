@@ -46,3 +46,4 @@ if adivina != numero_pensado:
     print(f"¡Has fallado! El número en el que estaba pensando era {numero_pensado}!\n¡Buena suerte para la próxima!")
 
 
+#Implementar funciones
