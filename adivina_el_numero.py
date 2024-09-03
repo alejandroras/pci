@@ -12,38 +12,92 @@
 # implementar un sistema de puntuación basado en la cantidad de intentos y dificultad seleccionada en el juego
 import random
 
-intentos = 0
-numero_min = 1
-numero_max = 20
+def configuración_juego():
+    print("Hola! ¿Cuál es tu nombre?: ")
+    username = input().title()
 
-print("Hola! Cuál es tu nombre?: ")
-username = input().title()
-numero_pensado = random.randint(numero_min, numero_max)
+    while True:
+        
+        dificultad = input("Selecciona el nivel de dificultad (fácil, intermedio, difícil, personalizado): ").lower()
+        
+        if dificultad == "fácil":
+            numero_min = 1
+            numero_max = 10
+            intentos_permitidos = 6
+            break
+        
+        elif dificultad == "intermedio":
+            numero_min = 1
+            numero_max = 20
+            intentos_permitidos = 5
+            break
+        
+        elif dificultad == "difícil":
+            numero_min = 1
+            numero_max = 50
+            intentos_permitidos = 4
+            break
+        
+        elif dificultad == "personalizado":
+            numero_min = int(input("Ingresa el número mínimo del rango a adivinar: "))
+            numero_max = int(input("Ingresa el número máximo del rango a adivinar: "))
+            intentos_permitidos = int(input("Ingresa el número de intenots permitidos: "))
+            break
+        
+        else:
+            print("Selección inválida. Elige entre fácil, medio ,difícil o personalizado")
+    
+    return username, numero_min, numero_max, intentos_permitidos
 
-intentos_permitidos = 6
-
-print("Bueno, " + username + " . Estoy pensando en un número entre el " + str(numero_min) + " y " + str(numero_max))
-
-while intentos < intentos_permitidos:
+def obtener_adivinanza(intentos_ya_realizados):
     while True:
         try:
-            adivina = int(input("Dime un número: "))
-            break
+            adivina = int(input("¿En qué número estoy pensando?: "))
+            if adivina in intentos_ya_realizados:
+                print("Ya habías intentado ese número. Prueba con otro.")
+            else:
+                return adivina
         except ValueError:
-            print("Por favor, introduce un número válido.")
+            print("Introduce un número válido.")
 
-    intentos += 1
-
+def checar_adivinanza(adivina, numero_pensado):
     if adivina < numero_pensado:
         print("Tu número es menor al que estoy pensando.")
+        return False
     elif adivina > numero_pensado:
         print("Tu número es mayor al que estoy pensando.")
+        return False
     elif adivina == numero_pensado:
-        print(f"Me ganaste {username}! Adivinaste el número en {intentos} intentos.")
+        print("Me ganaste! Adivinaste el número!")
+        return True
+
+def jugar_de_nuevo():
+    respuesta = input("¿Te gustaría volver a jugar? (Sí/No): ").lower()
+    return respuesta == "sí"
+
+
+print("Bienvenido al juego de Adivina el Número!")
+
+while True:
+    username, numero_min, numero_max, intentos_permitidos = configuración_juego()
+    numero_pensado = random.randint(numero_min, numero_max)
+    intentos = 0
+    intentos_previos = set()
+
+    print(f"Bueno, {username}, estoy pensando en un número entre el {numero_min} y el {numero_max}.")
+
+    while intentos < intentos_permitidos:
+        adivina = obtener_adivinanza(intentos_previos)
+        intentos += 1
+        intentos_previos.add(adivina)
+
+        if checar_adivinanza(adivina, numero_pensado):
+            print(f"\nAdivinaste el número en {intentos} intentos.")
+            break
+    
+    if adivina != numero_pensado:
+        print(f"Has fallado! El número en el que estaba pensando era {numero_pensado}.\n ¡Buena suerte para la próxima!")
+        
+    if not jugar_de_nuevo():
+        print("¡Gracias por jugar! Hasta la próxima.")
         break
-
-if adivina != numero_pensado:
-    print(f"¡Has fallado! El número en el que estaba pensando era {numero_pensado}!\n¡Buena suerte para la próxima!")
-
-
-#Implementar funciones
