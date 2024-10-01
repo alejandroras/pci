@@ -1,18 +1,33 @@
-#ADIVINA EL NÚMERO
-# ideas a implementar al codigo
-# crear niveles de dificultad en los que se aumente el rango de números posibles a adivinar, así como el número de intentos que el usuario tiene
-# crear un nivel personalizado en el que el usuario pueda escoger el rango de números a adivinar así como el número de intentos que tiene
-# crear un modo multijugador
-# que el usuario solamente pueda dar números cuando haga su intento de adivinar
-# que el usuario no pueda volver a decir un número que ya haya dicho antes para que así no pierda intentos
-# hacer una interfaz gráfica simple, puede ser con Tkinter o algo similar
-# dependiendo de la dificultad seleccionada la máquina proporcionará pistas como: "Te queda un intento, aquí tienes una pista: el número es par"
-# crear un sistema en el que el usuario pueda canjear pistas a cambio de intentos restantes, entre mejor sea la pista más intentos costará
-# una opción de jugar nuevamente que mantenga un historial de las partidas y resultados pasados
-# implementar un sistema de puntuación basado en la cantidad de intentos y dificultad seleccionada en el juego
 import random
 import unidecode
 
+juegos_jugados = []
+juegos_ganados = []
+intentos_por_juego = []
+
+def registrar_estadisticas(gano, intentos):
+    juegos_jugados.append(1)
+    if gano:
+        juegos_ganados.append(1)
+    else:
+        juegos_ganados.append(0)
+    intentos_por_juego.append(intentos)
+
+def estadisticas():
+    total = sum(juegos_jugados)
+    ganados = sum(juegos_ganados)
+    perdidos = total-ganados
+    if intentos_por_juego:
+        promedio_intentos = sum(intentos_por_juego)/len(intentos_por_juego)
+    else:
+        promedio_intentos = 0
+    
+    print("\n -- Estadísticas del juego ---")
+    print(f"Total de juegos jugados: {total}")
+    print(f"Juegos ganados: {ganados}")
+    print(f"Juegos perdidos: {perdidos}")
+    print(f"Promedio de intentos por juego: {promedio_intentos}")
+    print("----------------------------------\n")
 
 def configuración_juego():
     print("Hola! ¿Cuál es tu nombre?: ")
@@ -98,11 +113,33 @@ while True:
         
         if checar_adivinanza(adivina, numero_pensado):
             print(f"\nAdivinaste el número en {intentos} intentos.")
+            registrar_estadisticas(True, intentos)
             break
     
     if adivina != numero_pensado:
         print(f"Has fallado! El número en el que estaba pensando era {numero_pensado}.\n ¡Buena suerte para la próxima!")
+        registrar_estadisticas(False, intentos)
         
     if not jugar_de_nuevo():
         print("¡Gracias por jugar! Hasta la próxima.")
+        estadisticas()
         break
+
+
+
+
+
+
+
+#ADIVINA EL NÚMERO
+# ideas a implementar al codigo
+# crear niveles de dificultad en los que se aumente el rango de números posibles a adivinar, así como el número de intentos que el usuario tiene
+# crear un nivel personalizado en el que el usuario pueda escoger el rango de números a adivinar así como el número de intentos que tiene
+# crear un modo multijugador
+# que el usuario solamente pueda dar números cuando haga su intento de adivinar
+# que el usuario no pueda volver a decir un número que ya haya dicho antes para que así no pierda intentos
+# hacer una interfaz gráfica simple, puede ser con Tkinter o algo similar
+# dependiendo de la dificultad seleccionada la máquina proporcionará pistas como: "Te queda un intento, aquí tienes una pista: el número es par"
+# crear un sistema en el que el usuario pueda canjear pistas a cambio de intentos restantes, entre mejor sea la pista más intentos costará
+# una opción de jugar nuevamente que mantenga un historial de las partidas y resultados pasados
+# implementar un sistema de puntuación basado en la cantidad de intentos y dificultad seleccionada en el juego
