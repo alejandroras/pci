@@ -4,21 +4,24 @@ import unidecode
 juegos_jugados = []
 juegos_ganados = []
 intentos_por_juego = []
+estadisticas_partidas = []
 
 def registrar_estadisticas(gano, intentos):
-    juegos_jugados.append(1)
-    if gano:
-        juegos_ganados.append(1)
-    else:
-        juegos_ganados.append(0)
-    intentos_por_juego.append(intentos)
+    estadisticas_partidas.append([gano,intentos])
 
 def estadisticas():
-    total = sum(juegos_jugados)
-    ganados = sum(juegos_ganados)
+    total = len(estadisticas_partidas)
+    ganados = 0
+    for partida in estadisticas_partidas:
+        if partida[0]:
+            ganados += 1
     perdidos = total-ganados
-    if intentos_por_juego:
-        promedio_intentos = sum(intentos_por_juego)/len(intentos_por_juego)
+    intentos_totales = []
+    for partida in estadisticas_partidas:
+        intentos_totales.append(partida[1])
+    
+    if intentos_totales:
+        promedio_intentos = sum(intentos_totales) / len(intentos_totales)
     else:
         promedio_intentos = 0
     
