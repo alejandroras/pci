@@ -33,9 +33,6 @@ def estadisticas():
     print("----------------------------------\n")
 
 def configuración_juego():
-    print("Hola! ¿Cuál es tu nombre?: ")
-    username = input().title()
-
     while True:
         
         dificultad = unidecode.unidecode(input("Selecciona el nivel de dificultad (fácil, intermedio, difícil, personalizado): ").lower())
@@ -59,11 +56,25 @@ def configuración_juego():
             break
         
         elif dificultad == "personalizado":
-            numero_min = int(input("Ingresa el número mínimo del rango a adivinar: "))
-            numero_max = int(input("Ingresa el número máximo del rango a adivinar: "))
-            intentos_permitidos = int(input("Ingresa el número de intentos permitidos: "))
+            while True:
+                try:
+                    numero_min = int(input("Ingresa el número mínimo del rango a adivinar: "))
+                    break
+                except ValueError:
+                    print("Selección inválida. Por favor ingresa un número entero.")
+            while True:
+                try:
+                    numero_max = int(input("Ingresa el número máximo del rango a adivinar: "))
+                    break
+                except ValueError:
+                    print("Selección inválida. Por favor ingresa un número entero.")
+            while True:
+                try:
+                    intentos_permitidos = int(input("Ingresa el número de intentos permitidos: "))
+                    break
+                except ValueError:
+                    print("Selección inválida. Por favor ingresa un número entero.")
             break
-        
         else:
             print("Selección inválida. Elige entre fácil, intermedio ,difícil o personalizado")
     
@@ -97,7 +108,9 @@ def jugar_de_nuevo():
     respuesta = input("¿Te gustaría volver a jugar? (Sí/No): ").lower()
     return respuesta == "sí" or respuesta == "si"
 
-print("Bienvenido al juego de Adivina el Número!")
+print("Hola! Bienvenido al juego de Adivina el Número!")
+username = input("¿Cuál es tu nombre?: ").title()
+
 
 while True:
     username, numero_min, numero_max, intentos_permitidos = configuración_juego()
@@ -105,7 +118,7 @@ while True:
     intentos = 0
     intentos_previos = set()
 
-    print(f"Bueno, {username}, estoy pensando en un número entre el {numero_min} y el {numero_max}.")
+    print(f"Bueno {username}, estoy pensando en un número entre el {numero_min} y el {numero_max}.")
 
     while intentos < intentos_permitidos:
         adivina = obtener_adivinanza(intentos_previos, numero_min, numero_max)
@@ -136,13 +149,7 @@ while True:
 
 #ADIVINA EL NÚMERO
 # ideas a implementar al codigo
-# crear niveles de dificultad en los que se aumente el rango de números posibles a adivinar, así como el número de intentos que el usuario tiene
-# crear un nivel personalizado en el que el usuario pueda escoger el rango de números a adivinar así como el número de intentos que tiene
 # crear un modo multijugador
-# que el usuario solamente pueda dar números cuando haga su intento de adivinar
-# que el usuario no pueda volver a decir un número que ya haya dicho antes para que así no pierda intentos
 # hacer una interfaz gráfica simple, puede ser con Tkinter o algo similar
 # dependiendo de la dificultad seleccionada la máquina proporcionará pistas como: "Te queda un intento, aquí tienes una pista: el número es par"
 # crear un sistema en el que el usuario pueda canjear pistas a cambio de intentos restantes, entre mejor sea la pista más intentos costará
-# una opción de jugar nuevamente que mantenga un historial de las partidas y resultados pasados
-# implementar un sistema de puntuación basado en la cantidad de intentos y dificultad seleccionada en el juego
