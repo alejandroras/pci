@@ -140,16 +140,3 @@ while True:
         print("¡Gracias por jugar! Hasta la próxima.")
         estadisticas()
         break
-
-
-
-
-
-
-
-#ADIVINA EL NÚMERO
-# ideas a implementar al codigo
-# crear un modo multijugador
-# hacer una interfaz gráfica simple, puede ser con Tkinter o algo similar
-# dependiendo de la dificultad seleccionada la máquina proporcionará pistas como: "Te queda un intento, aquí tienes una pista: el número es par"
-# crear un sistema en el que el usuario pueda canjear pistas a cambio de intentos restantes, entre mejor sea la pista más intentos costará
