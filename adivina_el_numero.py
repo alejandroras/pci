@@ -15,7 +15,7 @@ def estadisticas():
     for partida in estadisticas_partidas:
         if partida[0]:
             ganados += 1
-    perdidos = total-ganados
+    perdidos = total - ganados
     intentos_totales = []
     for partida in estadisticas_partidas:
         intentos_totales.append(partida[1])
@@ -32,7 +32,7 @@ def estadisticas():
     print(f"Promedio de intentos por juego: {promedio_intentos}")
     print("----------------------------------\n")
 
-def configuración_juego():
+def configuracion_juego():
     while True:
         
         dificultad = unidecode.unidecode(input("Selecciona el nivel de dificultad (fácil, intermedio, difícil, personalizado): ").lower())
@@ -113,7 +113,7 @@ username = input("¿Cuál es tu nombre?: ").title()
 
 
 while True:
-    username, numero_min, numero_max, intentos_permitidos = configuración_juego()
+    username, numero_min, numero_max, intentos_permitidos = configuracion_juego()
     numero_pensado = random.randint(numero_min, numero_max)
     intentos = 0
     intentos_previos = set()
